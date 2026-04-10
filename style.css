@@ -1,0 +1,5 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Evita que salgan barras de desplazamiento */
+    background-color: #000000; /* Fondo negro espacial */
+}

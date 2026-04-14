@@ -6,9 +6,9 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import Stats from 'https://unpkg.com/three@0.160.0/examples/jsm/libs/stats.module.js';
-// =========================================================
+
 // 1. CONFIGURACIÓN BASE (Motor, Escena y Cámara)
-// =========================================================
+
 const clock = new THREE.Clock();
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -36,9 +36,9 @@ const composer = new EffectComposer(renderer);
 composer.addPass(renderScene);
 composer.addPass(bloomPass);
 
-// =========================================================
+
 // 2. ESTADO DEL JUEGO Y CONSTANTES
-// =========================================================
+
 // Controles de Cámara
 let camaraLibre = false; 
 
@@ -76,9 +76,9 @@ const uiVelocidad = document.getElementById('hud-velocidad');
 const uiMensaje = document.getElementById('mensaje-centro');
 const uiTextoMensaje = document.getElementById('texto-mensaje');
 const btnReiniciar = document.getElementById('btn-reiniciar');
-// =========================================================
+
 // 3. ILUMINACIÓN Y SOMBRAS
-// =========================================================
+
 const ambientLight = new THREE.AmbientLight('#0a0025', 2.5); 
 scene.add(ambientLight);
 
@@ -110,9 +110,9 @@ scene.add(luzstation1);
 const luzstation2 = new THREE.PointLight('#fefff5', 500000, 90); 
 luzstation2.position.set(-50, 90, -400);
 scene.add(luzstation2);
-// =========================================================
+
 // 3.5. DECORACIÓN DEL ENTORNO: POLVO ESTELAR (Partículas)
-// =========================================================
+
 const cantidadEstrellas = 4000;
 const geometriaEstrellas = new THREE.BufferGeometry();
 const posicionesEstrellas = new Float32Array(cantidadEstrellas * 3); // 3 valores por estrella (x, y, z)
@@ -136,9 +136,8 @@ const materialEstrellas = new THREE.PointsMaterial({
 const campoEstelar = new THREE.Points(geometriaEstrellas, materialEstrellas);
 scene.add(campoEstelar);
 
-// =========================================================
 // 4. MATERIALES Y GEOMETRÍAS REUTILIZABLES
-// =========================================================
+
 // Entorno
 const matSeguro = new THREE.MeshStandardMaterial({ color: '#e0dfdf', roughness: 0.5, metalness: 0.4 }); 
 const matCarretera = new THREE.MeshStandardMaterial({ color: '#000000', roughness: 0.1, metalness: 0.8 }); 
@@ -204,9 +203,9 @@ function generarSueloPlanchas(ancho, largo) {
     }
     return grupoSuelo;
 }
-// =========================================================
+
 // 5. GENERADOR DE NIVEL Y TRÁFICO (Plataformas Flotantes)
-// =========================================================
+
 const diseñoNivel = [
     { tipo: 'salvo', vias: 3 },     
     { tipo: 'carretera', vias: 2 }, 
@@ -229,7 +228,7 @@ if (bloque.tipo === 'salvo') {
         scene.add(plataforma);
         // BARRERAS LUMINOSAS
         const grosorBarrera = 0.5; // Grosor del tubo
-        const altoBarrera = 0.5;   // ¡EL TRUCO! Ahora es un tubo finito de 0.3 en vez de un muro de 2.0
+        const altoBarrera = 0.5;   // 
         const geoBarrera = new THREE.BoxGeometry(grosorBarrera, altoBarrera, longitudBloque);
         
         const alturaNeon = 2.5; // Altura a la que flota (3 como pediste, o 2.5 para que quede a la altura de la nave)
@@ -263,21 +262,21 @@ if (bloque.tipo === 'salvo') {
             }
         }
     }
-    // 3. MUY IMPORTANTE: Siempre restamos la longitud al final.
-    // Haya suelo o haya vacío, debemos dejar el hueco físico en el espacio.
+
+
     posicionZActual -= longitudBloque; 
 });
 
-// =========================================================
+
 // 6. CREACIÓN DEL JUGADOR (Cargando modelo de Sketchfab)
-// =========================================================
-// 6.1. "Contenedor Lógico" vacío. mover con WASD.
+
+// 6.1. mover con WASD.
 const dron = new THREE.Group();
 scene.add(dron);
 const loader = new GLTFLoader();
 // 6.2. Cargamos el archivo GLB
 loader.load(
-    'models/nave.glb', // IMPORTANTE: Asegúrate de que el nombre coincida con tu archivo
+    'models/nave.glb',
     function (gltf) {
         const modeloNave = gltf.scene;
         modeloNave.scale.set(0.5, 0.5, 0.5); 
@@ -320,9 +319,9 @@ loader.load(
         console.error('Error cargando el asteroide:', error);
     }
 );
-// =========================================================
+
 // 7. CONTROLADORES DE EVENTOS (Inputs)
-// =========================================================
+
 window.addEventListener('keydown', (e) => {
     const tecla = e.key.toLowerCase();
     if (teclasPulsadas.hasOwnProperty(tecla)) {
@@ -365,7 +364,7 @@ loader.load(
         modeloSaturno.rotation.z = 6.01;
         modeloSaturno.position.set(-650, 0, -50); 
 
-        // 3. AÑADIR A LA ESCENA (¡Esto te faltaba!)
+
         scene.add(modeloSaturno);
         saturnoObjeto = modeloSaturno; 
         console.log("¡Saturno cargado correctamente!");
@@ -387,11 +386,9 @@ loader.load('models/earth.glb',
                 // Truco de iluminación para que no sea negro puro
                 nodo.material.emissive = new THREE.Color('#040404'); 
                 nodo.material.emissiveIntensity = 1.5;
-                
-                // --- EL TRUCO DEFINITIVO DE PROFUNDIDAD ---
-                // Preguntamos: ¿Esta parte del modelo ya era transparente de fábrica?
+
                 if (nodo.material.transparent === true || nodo.material.opacity < 1.0) {
-                    // Sí, son las nubes/atmósfera.
+
                     nodo.material.depthWrite = false;
                     nodo.material.opacity = 0.03;
                     nodo.renderOrder = 2;
@@ -478,10 +475,9 @@ loader.load('models/station2.glb',
         console.log("¡station2 cargado correctamente!");
     }
 );
- 
-// =========================================================
+
 // 8. FUNCIÓN DE REINICIO TOTAL
-// =========================================================
+
 function reiniciarJuego() {
     // 1. Resetear las variables de dificultad y estado
     nivelActual = 1;
@@ -508,10 +504,10 @@ function reiniciarJuego() {
 }
 
 btnReiniciar.addEventListener('click', reiniciarJuego);
-// =========================================================
+
 // 9. BUCLE DE ANIMACIÓN Y FÍSICAS
-// =========================================================
-// IMPORTANTE: El reloj se crea FUERA de la función animate
+
+
 const fpsElemento = document.getElementById('fps');
 let ultimoTiempo = performance.now();
 let fotogramas = 0;
@@ -563,7 +559,6 @@ function animate() {
         
     } else if (enTransicion) {
         // ESTADO DE VICTORIA
-        // Faltaba el delta aquí también
         dron.position.z -= (velocidadNave * 0.4) * delta; 
         const efectoFlote = Math.sin(Date.now() * 0.007) * 0.05; 
         dron.position.y = alturaBase + efectoFlote;
@@ -572,10 +567,7 @@ function animate() {
     // B. Animación del Tráfico y Detección
     obstaculos.forEach(obsObj => {
         // Movimiento lateral ajustado a delta
-        // Si notas que van MUY rápidos, cambia el 200 por 100 o 50
         const velocidadAsteroideBase = obsObj.vel * 200;
-        
-        // ¡CORREGIDO! Ahora usa la base calculada y la multiplica por delta
         obsObj.mesh.position.x += (velocidadAsteroideBase * multiplicadorVelocidad) * delta;
 
         // Rotación de los asteroides sincronizada con delta
@@ -621,12 +613,11 @@ function animate() {
         }
     });
 
-    // OPCIONAL: Rotación de los planetas de fondo (Earth y Saturn) con delta
     if (typeof earthObjeto !== 'undefined' && earthObjeto) {
         earthObjeto.rotation.y += 0.1 * delta; 
     }
 
-    // C. Lógica de Meta (Nivel Completado)
+    // C. Lógica de Meta
     if (!enColision && !enTransicion && dron.position.z <= zMeta) {
         enTransicion = true; 
         // VICTORIA

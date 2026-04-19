@@ -1,5 +1,127 @@
-body {
-    margin: 0;
+
+body { 
+    margin: 0; 
     overflow: hidden; /* Evita que salgan barras de desplazamiento */
     background-color: #000000; /* Fondo negro espacial */
+    font-family: 'Courier New', Courier, monospace; 
+}
+
+/*   PANTALLA DE INICIO (MENÚ)*/
+#pantalla-inicio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+#titulo-juego {
+    color: white;
+    font-size: 50px;
+    text-shadow: 0 0 20px #1cecff;
+    margin-bottom: 30px;
+}
+
+#texto-carga {
+    font-size: 24px;
+    color: #aaaaaa;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #000000;
+}
+
+#btn-empezar {
+    padding: 15px 30px;
+    background: transparent;
+    color: #1cecff;
+    border: 2px solid #1cecff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #1cecff;
+}
+
+#btn-empezar:hover {
+    background-color: #1cecff;
+    color: #000000;
+}
+
+/*   HUD Y MARCADORES (DENTRO DEL JUEGO)*/
+#hud-top {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none; /* Evita que el texto bloquee los clics del ratón */
+}
+
+#hud-nivel, #hud-velocidad, #hud-fps-texto {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff; 
+    text-shadow: 0 0 10px #ffffff; 
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+#btn-reiniciar {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 5px #ffffff;
+    box-shadow: 0 0 10px #ffffff inset, 0 0 10px #ffffff;
+    transition: all 0.3s ease;
+    pointer-events: auto; /* Permite hacer clic aunque el padre tenga pointer-events: none */
+}
+
+#btn-reiniciar:hover {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 20px #ffffff inset, 0 0 20px #ffffff;
+}
+
+/*MENSAJES CENTRALES (GAME OVER / VICTORIA)*/
+#mensaje-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado matemático perfecto */
+    z-index: 100;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#texto-mensaje {
+    font-size: 60px;
+    color: #00ffff;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    margin: 0;
+    letter-spacing: 5px;
+}
+
+/*CLASES DINÁMICAS (CONTROLADAS POR JS)*/
+.oculto { 
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+.visible { 
+    opacity: 1; 
+    pointer-events: auto; 
 }

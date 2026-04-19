@@ -6,91 +6,19 @@
     
     <link rel="stylesheet" href="style.css">
     
-    <style>
-
-        body { 
-            margin: 0; 
-            overflow: hidden; 
-            font-family: 'Courier New', Courier, monospace; 
-        }
-        
-        /* Marcador Superior Izquierdo */
-        #hud-top {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            pointer-events: none; /* Evita que el texto bloquee los clics del ratón */
-        }
-
-        #hud-nivel, #hud-velocidad, #hud-fps-texto {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff; /* Cian neón */
-            text-shadow: 0 0 10px #ffffff; /* Efecto brillo Bloom en 2D */
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        /* Cartel Central Gigante */
-        #mensaje-centro {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Centrado matemático perfecto */
-            z-index: 100;
-            text-align: center;
-            pointer-events: none;
-            transition: opacity 0.5s ease; /* Transición suave de fundido de entrada/salida */
-        }
-
-        #texto-mensaje {
-            font-size: 60px;
-            color: #00ffff;
-            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-            margin: 0;
-            letter-spacing: 5px;
-        }
-        /* Estilo del botón de reinicio */
-        #btn-reiniciar {
-            margin-top: 15px;
-            padding: 8px 15px;
-            background-color: transparent;
-            color: #ffffff; /* Cian neón */
-            border: 2px solid #ffffff;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            text-shadow: 0 0 5px #ffffff;
-            box-shadow: 0 0 10px #ffffff inset, 0 0 10px #ffffff;
-            transition: all 0.3s ease;
-            
-            /* CRÍTICO: Permite hacer clic aunque el padre tenga pointer-events: none */
-            pointer-events: auto; 
-        }
-
-        /* Efecto al pasar el ratón por encima */
-        #btn-reiniciar:hover {
-            background-color: #ffffff;
-            color: #000000;
-            box-shadow: 0 0 20px #ffffff inset, 0 0 20px #ffffff;
-        }
-
-        /* Clases dinámicas controladas desde JavaScript */
-        .oculto { opacity: 0; }
-        .visible { opacity: 1; }
-    </style>
 </head>
 <body>
+    <div id="pantalla-inicio">
+        <h1 id="titulo-juego">TRAVESÍA ESPACIAL</h1>
+        <p id="texto-carga">Cargando... 0%</p>
+        <button id="btn-empezar" class="oculto">EMPEZAR</button>
+    </div>
     
     <div id="hud-top">
         <span id="hud-nivel">LEVEL 1</span>
         <span id="hud-velocidad">SPEED: 0.5x</span>
         <span id="hud-fps-texto">FPS: <span id="fps">0</span></span> 
-        <button id="btn-reiniciar">RESET</button>
+        <button id="btn-reiniciar">REINICIAR</button>
     </div>
 
     <div id="mensaje-centro" class="oculto">
